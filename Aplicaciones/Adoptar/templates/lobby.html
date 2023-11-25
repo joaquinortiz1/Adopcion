@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type='text/css' href='{% static "css/lobby.css" %}' rel='stylesheet'/>
+    <title>Adoptame - Página de Inicio</title>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Bienvenido a Adoptame</h1>
+
+        <!-- Mueve el formulario dentro de un contenedor con la clase "filter-form" -->
+        <div class="filter-form">
+            <form method="get">
+                {{ form.as_p }}
+                <button type="submit">Filtrar</button>
+            </form>
+        </div>
+
+        <div class="mascota-container">
+            {% for mascota in mascotas %}
+            <div class="mascota-card">
+                <h2>{{ mascota.nombre_mascota }}</h2>
+                <p><strong>Especie:</strong> {{ mascota.especie }}</p>
+                <p><strong>Raza:</strong> {{ mascota.raza }}</p>
+                <p><strong>Color:</strong> {{ mascota.color }}</p>
+                <p><strong>Sexo:</strong> {{ mascota.get_sexo_display }}</p>
+                <p><strong>Edad Aproximada:</strong> {{ mascota.edad }} años</p>
+                <p><strong>Descripción:</strong> {{ mascota.descripcion }}</p>
+                <p><strong>Fecha de Rescate:</strong> {{ mascota.fecha_rescate}}</p>
+                <p><strong>Organizacion:</strong> {{ mascota.organizacion}}</p>
+                {% if mascota.fotomascota_set.all %}
+                    <img src="{{ mascota.fotomascota_set.first.url_foto }}" alt="{{ mascota.nombre_mascota }} - Foto">
+                {% else %}
+                    <p>No hay fotos disponibles</p>
+                {% endif %}
+                <button onclick="location.href='{% url 'agendar_cita' mascota.id %}'">Adoptar</button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>

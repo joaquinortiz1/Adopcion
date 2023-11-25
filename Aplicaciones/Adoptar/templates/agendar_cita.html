@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type='text/css' href='{% static "css/agendar_cita.css" %}' rel='stylesheet'/>
+    <title>Agendar Cita para Adoptar a {{ mascota.nombre_mascota }}</title>
+</head>
+<body>
+
+    <h1>Agendar Cita para Adoptar a {{ mascota.nombre_mascota }}</h1>
+
+    <div class="mascota-info">
+        <p>Información de la mascota:</p>
+        <ul>
+            <li>Especie: {{ mascota.especie }}</li>
+            <li>Raza: {{ mascota.raza }}</li>
+            <li>Color: {{ mascota.color }}</li>
+            <li>Sexo: {{ mascota.get_sexo_display }}</li>
+            <li>Edad: {{ mascota.edad }} años</li>
+            <li>Descripción: {{ mascota.descripcion }}</li>
+        </ul>
+    </div>
+
+    <div class="cita-registro">
+        <!-- ... aquí puedes agregar el formulario para agendar la cita ... -->
+        <h2>Registro de Cita</h2>
+        <form method="post">
+            <!-- Agrega los campos del formulario según tus necesidades -->
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Agendar Cita</button>
+        </form>
+    </div>
+
+</body>
+</html>
