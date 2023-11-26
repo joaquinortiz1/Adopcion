@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type='text/css' href='{% static "css/galeria.css" %}' rel='stylesheet'/>
+    <title>Galería de Fotos</title>
+
+</head>
+<body>
+
+    <h1>Galería de Fotos de {{ mascota.nombre_mascota }}</h1>
+
+    <div class="galeria-container">
+        {% for foto in fotos_mascota %}
+            <img src="{{ foto.url_foto }}" alt="{{ mascota.nombre_mascota }} - Foto">
+        {% endfor %}
+    </div>
+
+</body>
+</html>

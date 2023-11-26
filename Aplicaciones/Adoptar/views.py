@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Mascota, CitaAdopcion
+from .models import Mascota, CitaAdopcion, FotoMascota
 from django.views import View
 from .forms import FiltroMascotasForm, CitaForm
 
@@ -57,3 +57,15 @@ def inicio_sesion(request):
 
 def registro(request):
     return render(request, 'registro.html')
+
+def mostrar_galeria(request, mascota_id):
+    # Obtener la mascota seleccionada o devolver un error 404 si no existe
+    mascota = get_object_or_404(Mascota, id=mascota_id)
+
+    # Obtener todas las fotos asociadas a la mascota seleccionada
+    fotos_mascota = FotoMascota.objects.filter(mascota=mascota)
+
+    # Puedes realizar cualquier lógica adicional aquí según tus necesidades
+
+    # Renderizar la plantilla de galería con las fotos de la mascota seleccionada
+    return render(request, 'galeria.html', {'mascota': mascota, 'fotos_mascota': fotos_mascota})

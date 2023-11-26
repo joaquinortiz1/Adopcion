@@ -34,15 +34,24 @@
                 <p><strong>Fecha de Rescate:</strong> {{ mascota.fecha_rescate}}</p>
                 <p><strong>Organizacion:</strong> {{ mascota.organizacion}}</p>
                 {% if mascota.fotomascota_set.all %}
-                    <img src="{{ mascota.fotomascota_set.first.url_foto }}" alt="{{ mascota.nombre_mascota }} - Foto">
+                    <a href="{% url 'galeria' mascota.id %}" target="_blank">
+                        <img src="{{ mascota.fotomascota_set.first.url_foto }}" alt="{{ mascota.nombre_mascota }} - Foto">
+                    </a>
                 {% else %}
                     <p>No hay fotos disponibles</p>
-                {% endif %}
+                {% endif %}     
                 <button onclick="location.href='{% url 'agendar_cita' mascota.id %}'">Adoptar</button>
             </div>
             {% endfor %}
+
+            <!--<div id="galeria" class="galeria-container">-->
+                <!--<span class="cerrar-galeria" onclick="cerrarGaleria()">&times;</span>-->
+                <!--<img id="imagen-galeria" class="galeria-imagen" alt="Galería">-->
+            <!--</div>-->
         </div>
     </div>
 
+    <!--<script type='text/javascript' src='{% static "js/lobby.js" %}'> var mascotaId = {{ mascota.id }};
+    </script>-->
 </body>
 </html>
