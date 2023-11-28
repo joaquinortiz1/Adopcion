@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type='text/css' href='{% static "css/index.css" %}' rel='stylesheet'/>
+    <title>Adoptame - Página de Inicio</title>
+</head>
+<body>
+    <div class="barra-navegacion">
+        <ul>
+            <li class="opcion" onmouseover="mostrarOpciones('iniciar-sesion')" onmouseout="ocultarOpciones('iniciar-sesion')">
+                <a href="#">Iniciar Sesión</a>
+                <ul class="opciones-adicionales" id="opciones-iniciar-sesion">
+                    <li><a href="{% url 'inicio_sesion' %}">Como Adoptante</a></li>
+                    <li><a href="{% url 'inicio_sesion_organizacion' %}">Como Organización</a></li>
+                </ul>
+            </li>
+            <li class="opcion" onmouseover="mostrarOpciones('registrarse')" onmouseout="ocultarOpciones('registrarse')">
+                <a href="#">Registrarse</a>
+                <ul class="opciones-adicionales" id="opciones-registrarse">
+                    <li><a href="{% url 'registro' %}">Como Adoptante</a></li>
+                    <li><a href="{% url 'registro_organizacion' %}">Como Organización</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="presentation">
+        <div class="main-text">Adoptame</div>
+        <div class="sub-text">
+            <div>Descubre</div>
+            <div>un nuevo</div>
+            <div>compañero</div>
+            <div>con el que compartirás</div>
+            <div>un vínculo irrompible.</div>
+            <div>¡Súmate a nuestra comunidad</div>
+            <div>de amantes de animales hoy mismo!</div>
+        </div>
+    </div>
+    
+    <script type='text/javascript' src='{% static "js/index.js" %}'></script>
+
+</body>
+</html>

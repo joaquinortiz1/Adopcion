@@ -3,6 +3,9 @@ from .models import Mascota, CitaAdopcion, FotoMascota
 from django.views import View
 from .forms import FiltroMascotasForm, CitaForm
 
+def index(request):
+    return render(request, 'index.html')
+
 def lobby(request):
     mascotas = Mascota.objects.all()
 
@@ -58,6 +61,12 @@ def inicio_sesion(request):
 def registro(request):
     return render(request, 'registro.html')
 
+def inicio_sesion_organizacion(request):
+    return render(request, 'inicio_sesion_org.html')
+
+def registro_organizacion(request):
+    return render(request, 'registro_org.html')
+
 def mostrar_galeria(request, mascota_id):
     # Obtener la mascota seleccionada o devolver un error 404 si no existe
     mascota = get_object_or_404(Mascota, id=mascota_id)
@@ -69,3 +78,4 @@ def mostrar_galeria(request, mascota_id):
 
     # Renderizar la plantilla de galería con las fotos de la mascota seleccionada
     return render(request, 'galeria.html', {'mascota': mascota, 'fotos_mascota': fotos_mascota})
+

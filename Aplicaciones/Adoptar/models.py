@@ -43,6 +43,7 @@ class Mascota(models.Model):
         texto = "{0} {1} ({2})"
         return texto.format(self.nombre_mascota, self.especie, self.edad)
     
+    #Crear Sede para que las organizaciones tengan diferentes sedes y que se muestre en la mascota
 
 class Region(models.Model):
     nombre_region=models.CharField(max_length=50)
