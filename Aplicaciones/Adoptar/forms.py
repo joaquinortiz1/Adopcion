@@ -8,3 +8,8 @@ class FiltroMascotasForm(forms.Form):
 class CitaForm(forms.Form):
     fecha = forms.DateField(label='Fecha', widget=forms.DateInput(attrs={'type': 'date'}))
     hora = forms.TimeField(label='Hora', widget=forms.TimeInput(attrs={'type': 'time'}))
+
+class RegistroForm(forms.Form):
+    username = forms.CharField(label='Nombre de Usuario', max_length=100)
+    email = forms.EmailField(label='Correo Electrónico')
+    password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)

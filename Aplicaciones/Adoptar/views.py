@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Mascota, CitaAdopcion, FotoMascota
 from django.views import View
-from .forms import FiltroMascotasForm, CitaForm
+from .forms import FiltroMascotasForm, CitaForm, RegistroForm
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
+
 
 def index(request):
     return render(request, 'index.html')
@@ -56,10 +60,47 @@ def agendar_cita(request, mascota_id):
     return render(request, 'agendar_cita.html', {'mascota': mascota, 'form': form})
 
 def inicio_sesion(request):
-    return render(request, 'inicio_sesion.html')
+    if request.method == 'POST':
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+
+            # Autenticar al usuario
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                # Iniciar sesión
+                login(request, user)
+
+                # Redirigir al lobby (ajusta la URL según tu configuración)
+                return redirect('lobby')
+
+    else:
+        form = AuthenticationForm()
+
+    return render(request, 'inicio_sesion.html', {'form': form})
 
 def registro(request):
-    return render(request, 'registro.html')
+    if request.method == 'POST':
+        form = RegistroForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+
+            # Crea el usuario
+            user = User.objects.create_user(username=username, email=email, password=password)
+
+            # Inicia sesión automáticamente después del registro
+            login(request, user)
+
+            # Redirige al lobby (ajusta la URL según tu configuración)
+            return redirect('inicio_sesion')  
+    else:
+        form = RegistroForm()
+
+    return render(request, 'registro.html', {'form': form})
 
 def inicio_sesion_organizacion(request):
     return render(request, 'inicio_sesion_org.html')

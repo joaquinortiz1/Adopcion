@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type='text/css' href='{% static "css/lobby.css" %}' rel='stylesheet'/>
+    <title>Adoptame - Lobby de Organizaciones</title>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Bienvenido a Adoptame - Lobby de Organizaciones</h1>
+
+        <!-- Formulario para ingresar nueva mascota -->
+        <div class="ingreso-mascota-form">
+            <h2>Ingresar Nueva Mascota</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Ingresar Mascota</button>
+            </form>
+        </div>
+
+        <div class="mascota-container">
+            {% for mascota in mascotas %}
+            <div class="mascota-card">
+                <h2>{{ mascota.nombre_mascota }}</h2>
+                <p><strong>Especie:</strong> {{ mascota.especie }}</p>
+                <p><strong>Raza:</strong> {{ mascota.raza }}</p>
+                <p><strong>Color:</strong> {{ mascota.color }}</p>
+                <p><strong>Sexo:</strong> {{ mascota.get_sexo_display }}</p>
+                <p><strong>Edad Aproximada:</strong> {{ mascota.edad }} años</p>
+                <p><strong>Descripción:</strong> {{ mascota.descripcion }}</p>
+                <p><strong>Fecha de Rescate:</strong> {{ mascota.fecha_rescate}}</p>
+                <p><strong>Organizacion:</strong> {{ mascota.organizacion}}</p>
+                {% if mascota.fotomascota_set.all %}
+                    <a href="{% url 'galeria' mascota.id %}" target="_blank">
+                        <img src="{{ mascota.fotomascota_set.first.url_foto }}" alt="{{ mascota.nombre_mascota }} - Foto">
+                    </a>
+                {% else %}
+                    <p>No hay fotos disponibles</p>
+                {% endif %}     
+                <button onclick="location.href='{% url 'agendar_cita' mascota.id %}'">Adoptar</button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>

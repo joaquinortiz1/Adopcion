@@ -9,18 +9,19 @@
 </head>
 <body>
     <div class="wrapper">
-        <form action="" class="form">
+        <form action="{% url 'registro' %}" method="post" class="form">
+            {% csrf_token %}
             <h1 class="title">Registro</h1>
             <div class="inp">
-                <input type="text" name="" id="" class="input" placeholder="Nombre de Usuario">
+                <input type="text" name="username" id="" class="input" placeholder="Nombre de Usuario">
                 <i class="fa-solid fa-user"></i>
             </div>
             <div class="inp">
-                <input type="email" name="" id="" class="input" placeholder="Correo Electrónico">
+                <input type="email" name="email" id="" class="input" placeholder="Correo Electrónico">
                 <i class="fa-solid fa-envelope"></i>
             </div>
             <div class="inp">
-                <input type="password" name="" id="" class="input" placeholder="Contraseña">
+                <input type="password" name="password" id="" class="input" placeholder="Contraseña">
                 <i class="fa-solid fa-lock"></i>
             </div>
             <button class="submit">Registrarse</button>
