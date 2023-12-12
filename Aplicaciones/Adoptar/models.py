@@ -18,6 +18,7 @@ class Organizacion(models.Model):
     tipo_organizacion=models.CharField(max_length=50)
     descripcion_org=models.TextField()
     email_organizacion=models.EmailField()
+    password_org=models.CharField(max_length=50, default='default_value')
     telefono_organizacion=models.DecimalField(max_digits=10, decimal_places=0)
     direccion=models.CharField(max_length=50)
     sitio_web=models.URLField()

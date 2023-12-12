@@ -1,14 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Mascota, CitaAdopcion, FotoMascota
+from .models import Mascota, CitaAdopcion, FotoMascota, Organizacion
 from django.views import View
-from .forms import FiltroMascotasForm, CitaForm, RegistroForm
+from django.contrib.auth.hashers import make_password
+from .forms import FiltroMascotasForm, CitaForm, RegistroForm, AuthenticationForm, OrganizacionForm, OrganizacionLoginForm
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
-
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 def index(request):
     return render(request, 'index.html')
+
 
 def lobby(request):
     mascotas = Mascota.objects.all()
@@ -32,12 +35,27 @@ def lobby(request):
 
     return render(request, 'lobby.html', {'mascotas': mascotas, 'form': form})
 
-#class AgendarCitaView(View):#
-    #template_name = 'agendar_cita.html'
+def lobby_organizacion(request):
+    mascotas = Mascota.objects.all()
 
-    #def get(self, request, mascota_id):
-        #mascota = Mascota.objects.get(id=mascota_id)
-        #return render(request, self.template_name, {'mascota': mascota})
+    if request.method == 'GET':
+        form = FiltroMascotasForm(request.GET)
+        if form.is_valid():
+            especie = form.cleaned_data.get('especie')
+            raza = form.cleaned_data.get('raza')
+            sexo = form.cleaned_data.get('sexo')
+
+            if especie:
+                mascotas = mascotas.filter(especie=especie)
+            if raza:
+                mascotas = mascotas.filter(raza=raza)
+            if sexo:
+                mascotas = mascotas.filter(sexo=sexo)
+
+    else:
+        form = FiltroMascotasForm()
+
+    return render(request, 'lobby_org.html', {'mascotas': mascotas, 'form': form})
     
 def agendar_cita(request, mascota_id):
     mascota = get_object_or_404(Mascota, pk=mascota_id)
@@ -58,6 +76,7 @@ def agendar_cita(request, mascota_id):
         form = CitaForm()
 
     return render(request, 'agendar_cita.html', {'mascota': mascota, 'form': form})
+
 
 def inicio_sesion(request):
     if request.method == 'POST':
@@ -96,17 +115,52 @@ def registro(request):
             login(request, user)
 
             # Redirige al lobby (ajusta la URL según tu configuración)
-            return redirect('inicio_sesion')  
+            return redirect('inicio_sesion')
     else:
         form = RegistroForm()
 
     return render(request, 'registro.html', {'form': form})
 
 def inicio_sesion_organizacion(request):
-    return render(request, 'inicio_sesion_org.html')
+    if request.method == 'POST':
+        form = OrganizacionLoginForm(request.POST)
+        if form.is_valid():
+            nombre_organizacion = form.cleaned_data['nombre_organizacion']
+            password_org = form.cleaned_data['password_org']
+
+            # Autenticar a la organización
+            organizacion = authenticate(request, nombre_organizacion=nombre_organizacion, password_org=password_org)
+
+            if organizacion is not None:
+                # Iniciar sesión
+                login(request, organizacion)
+
+                # Redirigir a donde desees después de iniciar sesión
+                return redirect('lobby_organizacion')  # Ajusta la URL según tu configuración
+            else:
+                # Organización no encontrada o contraseña incorrecta
+                messages.error(request, 'Nombre de organización o contraseña incorrectos. Inténtalo de nuevo.')
+
+    else:
+        form = OrganizacionLoginForm()
+
+    return render(request, 'inicio_sesion_org.html', {'form': form})
 
 def registro_organizacion(request):
-    return render(request, 'registro_org.html')
+    if request.method == 'POST':
+        form = OrganizacionForm(request.POST)
+        if form.is_valid():
+            # Guarda la organización en la base de datos
+            nueva_organizacion = form.save()
+
+            # Puedes realizar otras operaciones aquí si es necesario
+
+            # Redirige a donde desees después de registrar la organización
+            return redirect('inicio_sesion_organizacion')  # Ajusta la URL según tus necesidades
+    else:
+        form = OrganizacionForm()
+
+    return render(request, 'registro_org.html', {'form': form})
 
 def mostrar_galeria(request, mascota_id):
     # Obtener la mascota seleccionada o devolver un error 404 si no existe
@@ -120,3 +174,32 @@ def mostrar_galeria(request, mascota_id):
     # Renderizar la plantilla de galería con las fotos de la mascota seleccionada
     return render(request, 'galeria.html', {'mascota': mascota, 'fotos_mascota': fotos_mascota})
 
+def registrar_mascota(request):
+    if request.method == 'POST':
+        # Obtén los datos del formulario
+        nombre_mascota = request.POST['nombre_mascota']
+        especie = request.POST['especie']
+        raza = request.POST['raza']
+        color = request.POST['color']
+        sexo = request.POST['sexo']
+        edad = request.POST['edad']
+        fecha_rescate = request.POST['fecha_rescate']
+        descripcion = request.POST['descripcion']
+
+        # Crea una nueva mascota
+        nueva_mascota = Mascota.objects.create(
+            nombre_mascota=nombre_mascota,
+            especie=especie,
+            raza=raza,
+            color=color,
+            sexo=sexo,
+            edad=edad,
+            fecha_rescate=fecha_rescate,
+            descripcion=descripcion
+        )
+
+        # Redirige a donde desees después de crear la mascota
+        return redirect('lobby')
+    else:
+        # Si el método no es POST, renderiza el formulario
+        return render(request, 'registrar_mascota.html')

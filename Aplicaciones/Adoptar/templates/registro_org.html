@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="wrapper">
-        <form action="" class="form">
+        <form action="{% url 'registro_organizacion' %}" method="POST" class="form">{% csrf_token %}
             <h1 class="title">Registro</h1>
             <div class="inp">
                 <input type="text" name="" id="" class="input" placeholder="Nombre de Organizacion">
@@ -24,7 +24,7 @@
                 <i class="fa-solid fa-lock"></i>
             </div>
             <button class="submit">Registrarse</button>
-            <p class="footer">¿Ya tienes una cuenta?<a href="{% url 'inicio_sesion' %}" class="link"> Inicia Sesión</a></p>
+            <p class="footer">¿Ya tienes una cuenta?<a href="{% url 'inicio_sesion_organizacion' %}" class="link"> Inicia Sesión</a></p>
         </form>
 
         <div></div>
