@@ -40,7 +40,12 @@
                 {% else %}
                     <p>No hay fotos disponibles</p>
                 {% endif %}     
-                <button onclick="location.href='{% url 'agendar_cita' mascota.id %}'">Adoptar</button>
+                {% if mascota.id %}
+                    <button onclick="location.href='{% url 'postulacion_adopcion' mascota.id %}'">Adoptar</button>
+                {% else %}
+                    <p>No se puede generar la URL de adopción.</p>
+                {% endif %}
+
             </div>
             {% endfor %}
 

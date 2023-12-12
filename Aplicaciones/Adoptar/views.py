@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Mascota, CitaAdopcion, FotoMascota, Organizacion
+from .models import Mascota, CitaAdopcion, FotoMascota, Organizacion, Postulacion
 from django.views import View
 from django.contrib.auth.hashers import make_password
-from .forms import FiltroMascotasForm, CitaForm, RegistroForm, AuthenticationForm, OrganizacionForm, OrganizacionLoginForm
+from .forms import FiltroMascotasForm, CitaForm, RegistroForm, AuthenticationForm, OrganizacionForm, OrganizacionLoginForm, PostulacionForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -57,25 +57,25 @@ def lobby_organizacion(request):
 
     return render(request, 'lobby_org.html', {'mascotas': mascotas, 'form': form})
     
-def agendar_cita(request, mascota_id):
-    mascota = get_object_or_404(Mascota, pk=mascota_id)
+#def agendar_cita(request, mascota_id):
+    #mascota = get_object_or_404(Mascota, pk=mascota_id)
 
-    if request.method == 'POST':
-        form = CitaForm(request.POST)
-        if form.is_valid():
-            fecha = form.cleaned_data['fecha']
-            hora = form.cleaned_data['hora']
+    #if request.method == 'POST':
+        #form = CitaForm(request.POST)
+        #if form.is_valid():
+            #fecha = form.cleaned_data['fecha']
+            #hora = form.cleaned_data['hora']
 
             # Guarda la cita en la base de datos
-            cita = CitaAdopcion.objects.create(mascota=mascota, fecha=fecha, hora=hora)
+            #cita = CitaAdopcion.objects.create(mascota=mascota, fecha=fecha, hora=hora)
             
             # Puedes redirigir a otra página o realizar alguna otra acción
-            return redirect('lobby')  # Cambia 'nombre_de_la_vista' por la vista deseada
+            #return redirect('lobby')  # Cambia 'nombre_de_la_vista' por la vista deseada
 
-    else:
-        form = CitaForm()
+    #else:
+        #form = CitaForm()
 
-    return render(request, 'agendar_cita.html', {'mascota': mascota, 'form': form})
+    #return render(request, 'agendar_cita.html', {'mascota': mascota, 'form': form})
 
 
 def inicio_sesion(request):
@@ -203,3 +203,32 @@ def registrar_mascota(request):
     else:
         # Si el método no es POST, renderiza el formulario
         return render(request, 'registrar_mascota.html')
+
+def vista_organizacion(request):
+    organizaciones = Organizacion.objects.all()
+    print(organizaciones)  # Verifica si esta línea imprime en la consola
+    return render(request, 'registrar_mascota.html', {'organizaciones': organizaciones})
+
+def postulacion_adopcion(request, mascota_id):
+    mascota = get_object_or_404(Mascota, pk=mascota_id)
+        
+    if request.method == 'POST':
+        form = PostulacionForm(request.POST)
+        if form.is_valid():
+            nombre_completo = form.cleaned_data['nombre_completo']
+            rut = form.cleaned_data['rut']
+            estado_cita = form.cleaned_data['estado_cita']
+            adoptante = form.cleaned_data['adoptante']
+
+            # Crea la postulación
+            postulacion = Postulacion.objects.create(mascota=mascota, nombre_completo=nombre_completo, rut=rut, estado_cita=estado_cita, adoptante=adoptante)
+            # Lógica de postulación aquí
+            # Puedes acceder a los datos del formulario usando form.cleaned_data
+            return redirect('postulacion_exitosa')  # Ajusta la URL según tus necesidades
+    else:
+        form = PostulacionForm()
+
+    return render(request, 'postulacion_adopcion.html', {'mascota': mascota,'form': form})
+
+def postulacion_exitosa(request):
+    return render(request, 'postulacion_exitosa.html')

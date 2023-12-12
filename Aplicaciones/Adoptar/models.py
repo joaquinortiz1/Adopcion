@@ -53,14 +53,27 @@ class Region(models.Model):
     organizaciones=models.ForeignKey(Organizacion, on_delete=models.CASCADE)
 
 class FotoMascota(models.Model):
-    url_foto=models.URLField()
-    mascota=models.ForeignKey(Mascota, on_delete=models.CASCADE)
+    url_foto = models.URLField()
+    imagen = models.ImageField(upload_to='fotos/', default='default.jpg')  # Cambia 'default.jpg' por el valor que desees
+
+    mascota = models.ForeignKey(Mascota, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Foto de {self.mascota.nombre_mascota}"
 
 class CitaAdopcion(models.Model):
     fecha=models.DateField()
     hora=models.TimeField()
     estado_cita=models.CharField(max_length=50)
     adoptante=models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    mascota=models.ForeignKey(Mascota, on_delete=models.CASCADE)
+
+class Postulacion(models.Model):
+    nombre_completo = models.CharField(max_length=100)
+    rut = models.CharField(max_length=15)
+    telefono_contacto = models.CharField(max_length=15)
+    actividad_economica = models.CharField(max_length=100)
+    fecha_nacimiento = models.DateField()
     mascota=models.ForeignKey(Mascota, on_delete=models.CASCADE)
 
 class SeguimientoAdopcion(models.Model):
