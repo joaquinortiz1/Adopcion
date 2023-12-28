@@ -4,19 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Web</title>
+    <title>Login Web Organizacion</title>
     <link type='text/css' href='{% static "css/inicio_sesion.css" %}' rel='stylesheet'/>
 </head>
 <body>
     <div class="wrapper">
-        <form action="" class="form">
+        <form action="" method="post" class="form">
+            {% csrf_token %}
             <h1 class="title">Inicio</h1>
             <div class="inp">
-                <input type="text" name="" id="" class="input" placeholder="Organizacion">
+                <input type="text" name="nombre_organizacion" id="" class="input" placeholder="Organizacion">
                 <i class="fa-solid fa-user"></i>
             </div>
             <div class="inp">
-                <input type="password" name="" id="" class="input" placeholder="Contraseña">
+                <input type="password" name="password_org" id="" class="input" placeholder="Contraseña">
                 <i class="fa-solid fa-lock"></i>
             </div>
             <button class="submit">Iniciar Sesion</button>

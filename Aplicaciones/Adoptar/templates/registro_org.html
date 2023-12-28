@@ -12,17 +12,39 @@
         <form action="{% url 'registro_organizacion' %}" method="POST" class="form">{% csrf_token %}
             <h1 class="title">Registro</h1>
             <div class="inp">
-                <input type="text" name="" id="" class="input" placeholder="Nombre de Organizacion">
+                <input type="text" name="nombre_organizacion" class="input" placeholder="Nombre de Organización">
                 <i class="fa-solid fa-user"></i>
             </div>
             <div class="inp">
-                <input type="email" name="" id="" class="input" placeholder="Correo Electrónico">
+                <input type="email" name="email_organizacion" class="input" placeholder="Correo Electrónico">
                 <i class="fa-solid fa-envelope"></i>
             </div>
             <div class="inp">
-                <input type="password" name="" id="" class="input" placeholder="Contraseña">
+                <input type="password" name="password_org" class="input" placeholder="Contraseña">
                 <i class="fa-solid fa-lock"></i>
             </div>
+            <!-- Añadir los nuevos campos del formulario OrganizacionRegistroForm aquí -->
+            <div class="inp">
+                <input type="text" name="tipo_organizacion" class="input" placeholder="Tipo de Organización">
+                <i class="fa-solid fa-building"></i>
+            </div>
+            <div class="inp">
+                <textarea name="descripcion_org" class="input" placeholder="Descripción de la Organización"></textarea>
+                <i class="fa-solid fa-comment"></i>
+            </div>
+            <div class="inp">
+                <input type="tel" name="telefono_organizacion" class="input" placeholder="Teléfono de la Organización">
+                <i class="fa-solid fa-phone"></i>
+            </div>
+            <div class="inp">
+                <input type="text" name="direccion" class="input" placeholder="Dirección de la Organización">
+                <i class="fa-solid fa-map-marker"></i>
+            </div>
+            <div class="inp">
+                <input type="url" name="sitio_web" class="input" placeholder="Sitio Web de la Organización">
+                <i class="fa-solid fa-globe"></i>
+            </div>
+            <!-- Fin de los nuevos campos -->
             <button class="submit">Registrarse</button>
             <p class="footer">¿Ya tienes una cuenta?<a href="{% url 'inicio_sesion_organizacion' %}" class="link"> Inicia Sesión</a></p>
         </form>
@@ -30,7 +52,7 @@
         <div></div>
         <div class="banner">
             <h1 class="wel_text">BIENVENIDO<br/></h1>
-            <p class="para"> Ingresa tus datos <br/> para registrarte como <br/> organizacion <br/></p>
+            <p class="para"> Ingresa tus datos <br/> para registrarte como <br/> organización <br/></p>
         </div>
     </div>
 </body>

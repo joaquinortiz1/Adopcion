@@ -11,17 +11,11 @@
 <body>
 
     <div class="container">
+        <!-- Agregar enlace para redirigir a otra URL -->
+        <a href="{% url 'vista_org' %}" class="button">Ingresar nueva mascota</a>
         <h1>Bienvenido a Adoptame - Lobby de Organizaciones</h1>
 
-        <!-- Formulario para ingresar nueva mascota -->
-        <div class="ingreso-mascota-form">
-            <h2>Ingresar Nueva Mascota</h2>
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Ingresar Mascota</button>
-            </form>
-        </div>
+
 
         <div class="mascota-container">
             {% for mascota in mascotas %}
