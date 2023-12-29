@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Mascota, CitaAdopcion, FotoMascota, Organizacion, Postulacion
+from .models import Mascota, CitaAdopcion, FotoMascota, Organizacion, Postulacion, Raza, Especie
 from django.views import View
 from django.contrib.auth.hashers import make_password
 from .forms import FiltroMascotasForm, CitaForm, RegistroForm, AuthenticationForm, OrganizacionRegistroForm, OrganizacionLoginForm, PostulacionForm
@@ -191,16 +191,26 @@ def mostrar_galeria(request, mascota_id):
     return render(request, 'galeria.html', {'mascota': mascota, 'fotos_mascota': fotos_mascota})
 
 def registrar_mascota(request):
+    especies = Especie.objects.all()
+    razas = Raza.objects.all()
+    organizaciones = Organizacion.objects.all()
+
     if request.method == 'POST':
         # Obtén los datos del formulario
         nombre_mascota = request.POST['nombre_mascota']
-        especie = request.POST['especie']
-        raza = request.POST['raza']
+        especie_id = request.POST['especie']
+        raza_id = request.POST['raza']
         color = request.POST['color']
         sexo = request.POST['sexo']
         edad = request.POST['edad']
         fecha_rescate = request.POST['fecha_rescate']
         descripcion = request.POST['descripcion']
+        organizacion = request.POST['organizacion']
+        foto_mascota = request.FILES.get('fotos_mascota')
+
+        # Obtén las instancias de Especie y Raza
+        especie = Especie.objects.get(pk=especie_id)
+        raza = Raza.objects.get(pk=raza_id)
 
         # Crea una nueva mascota
         nueva_mascota = Mascota.objects.create(
@@ -211,19 +221,23 @@ def registrar_mascota(request):
             sexo=sexo,
             edad=edad,
             fecha_rescate=fecha_rescate,
-            descripcion=descripcion
+            descripcion=descripcion,
+            organizacion=organizacion,
+            foto_mascota=foto_mascota
         )
 
         # Redirige a donde desees después de crear la mascota
-        return redirect('lobby')
+        return redirect('lobby_organizacion')
+
     else:
         # Si el método no es POST, renderiza el formulario
-        return render(request, 'registrar_mascota.html')
+        return render(request, 'registrar_mascota.html', {'especies': especies, 'razas': razas, 'organizaciones': organizaciones})
 
-def vista_organizacion(request):
-    organizaciones = Organizacion.objects.all()
-    print(organizaciones)  # Verifica si esta línea imprime en la consola
-    return render(request, 'registrar_mascota.html', {'organizaciones': organizaciones})
+#def vista_organizacion(request):
+    #organizaciones = Organizacion.objects.all()
+    #razas = Raza.objects.all()
+    #print(organizaciones)  # Verifica si esta línea imprime en la consola
+    #return render(request, 'registrar_mascota.html', {'organizaciones': organizaciones,'razas': razas})
 
 def postulacion_adopcion(request, mascota_id):
     mascota = get_object_or_404(Mascota, pk=mascota_id)

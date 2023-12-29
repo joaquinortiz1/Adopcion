@@ -12,12 +12,20 @@
 
                     <div class="form-group">
                         <label for="especie">Especie:</label>
-                        <input type="text" id="especie" name="especie" class="form-control" placeholder="Especie" maxlength="50" required>
+                        <select name="especie" id="especie">
+                            {% for especie in especies %}
+                                <option value="{{ especie.id }}">{{ especie.nombre }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
 
                     <div class="form-group">
                         <label for="raza">Raza:</label>
-                        <input type="text" id="raza" name="raza" class="form-control" placeholder="Raza" maxlength="50" required>
+                        <select name="raza" id="raza">
+                            {% for raza in razas %}
+                                <option value="{{ raza.id }}">{{ raza.nombre }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -55,7 +63,7 @@
 
                     <div class="form-group">
                         <label for="organizacion">Organización:</label>
-                        <select id="organizacion" name="organizacion" class="form-control" required>
+                        <select name="organizacion" id="organizacion">
                             {% for org in organizaciones %}
                                 <option value="{{ org.id }}">{{ org.nombre_organizacion }}</option>
                             {% endfor %}
