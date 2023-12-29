@@ -205,12 +205,13 @@ def registrar_mascota(request):
         edad = request.POST['edad']
         fecha_rescate = request.POST['fecha_rescate']
         descripcion = request.POST['descripcion']
-        organizacion = request.POST['organizacion']
+        organizacion_id = request.POST['organizacion']
         foto_mascota = request.FILES.get('fotos_mascota')
 
         # Obtén las instancias de Especie y Raza
         especie = Especie.objects.get(pk=especie_id)
         raza = Raza.objects.get(pk=raza_id)
+        organizacion = Organizacion.objects.get(pk=organizacion_id)
 
         # Crea una nueva mascota
         nueva_mascota = Mascota.objects.create(

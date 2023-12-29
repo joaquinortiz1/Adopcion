@@ -39,6 +39,13 @@ class Raza(models.Model):
     def __str__(self):
         return self.nombre
     
+class FotoMascota(models.Model):
+    url_foto = models.URLField()
+    imagen = models.ImageField(upload_to='fotos/', default='default.jpg')  # Cambia 'default.jpg' por el valor que desees
+
+    def __str__(self):
+        return f"Foto de {self.mascota.nombre_mascota}"
+
 class Mascota(models.Model):
     nombre_mascota=models.CharField(max_length=50)
     especie = models.ForeignKey(Especie, on_delete=models.CASCADE)
@@ -49,6 +56,8 @@ class Mascota(models.Model):
     fecha_rescate=models.DateField(default=date.today)
     descripcion=models.TextField()
     organizacion = models.ForeignKey(Organizacion, on_delete=models.CASCADE, related_name='mascotas', default=None, null=True, blank=True)
+    foto_mascota = models.ImageField(upload_to='ruta/donde/guardar/las/fotos/', null=True, blank=True)
+    #foto_mascota = models.ForeignKey(FotoMascota, on_delete=models.CASCADE, null=True, blank=True, default=None)
     #adoptante=models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -64,14 +73,6 @@ class Region(models.Model):
     #mascotas=models.ForeignKey(Mascota, on_delete=models.CASCADE)
     organizaciones=models.ForeignKey(Organizacion, on_delete=models.CASCADE)
 
-class FotoMascota(models.Model):
-    url_foto = models.URLField()
-    imagen = models.ImageField(upload_to='fotos/', default='default.jpg')  # Cambia 'default.jpg' por el valor que desees
-
-    mascota = models.ForeignKey(Mascota, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"Foto de {self.mascota.nombre_mascota}"
 
 class CitaAdopcion(models.Model):
     fecha=models.DateField()

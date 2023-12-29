@@ -25,8 +25,8 @@
             {% for mascota in mascotas %}
             <div class="mascota-card">
                 <h2>{{ mascota.nombre_mascota }}</h2>
-                <!--<p><strong>Especie:</strong> {{ mascota.especie }}</p>-->
-                <!--<p><strong>Raza:</strong> {{ mascota.raza }}</p>-->
+                <p><strong>Especie:</strong> {{ mascota.especie }}</p>
+                <p><strong>Raza:</strong> {{ mascota.raza }}</p>
                 <p><strong>Color:</strong> {{ mascota.color }}</p>
                 <p><strong>Sexo:</strong> {{ mascota.get_sexo_display }}</p>
                 <p><strong>Edad Aproximada:</strong> {{ mascota.edad }} años</p>
