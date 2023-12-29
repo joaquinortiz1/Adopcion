@@ -33,12 +33,8 @@
                 <p><strong>Descripción:</strong> {{ mascota.descripcion }}</p>
                 <p><strong>Fecha de Rescate:</strong> {{ mascota.fecha_rescate}}</p>
                 <p><strong>Organizacion:</strong> {{ mascota.organizacion}}</p>
-                {% if mascota.fotomascota_set.all %}
-                    <a href="{% url 'galeria' mascota.id %}" target="_blank">
-                        <img src="{{ mascota.fotomascota_set.first.url_foto }}" alt="{{ mascota.nombre_mascota }} - Foto">
-                    </a>
-                {% else %}
-                    <p>No hay fotos disponibles</p>
+                {% if mascota.foto_mascota %}
+                    <img src="{{ mascota.foto_mascota.url }}" alt="{{ mascota.nombre_mascota }}">
                 {% endif %}     
                 {% if mascota.id %}
                     <button onclick="location.href='{% url 'postulacion_adopcion' mascota.id %}'">Adoptar</button>

@@ -56,7 +56,7 @@ class Mascota(models.Model):
     fecha_rescate=models.DateField(default=date.today)
     descripcion=models.TextField()
     organizacion = models.ForeignKey(Organizacion, on_delete=models.CASCADE, related_name='mascotas', default=None, null=True, blank=True)
-    foto_mascota = models.ImageField(upload_to='ruta/donde/guardar/las/fotos/', null=True, blank=True)
+    foto_mascota = models.ImageField(upload_to='imagenes', null=True, blank=True)
     #foto_mascota = models.ForeignKey(FotoMascota, on_delete=models.CASCADE, null=True, blank=True, default=None)
     #adoptante=models.ForeignKey(Usuario, on_delete=models.CASCADE)
 

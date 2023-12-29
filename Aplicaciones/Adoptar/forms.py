@@ -36,7 +36,7 @@ class OrganizacionLoginForm(forms.Form):
 class MascotaForm(forms.ModelForm):
     class Meta:
         model = Mascota
-        fields = ['nombre_mascota', 'especie', 'raza', 'color', 'sexo', 'edad', 'fecha_rescate', 'descripcion']
+        fields = ['nombre_mascota', 'especie', 'raza', 'color', 'sexo', 'edad', 'fecha_rescate', 'descripcion', 'organizacion', 'foto_mascota']
 
 class PostulacionForm(forms.Form):
     nombre_completo = forms.CharField(label='Nombre Completo', max_length=100)
