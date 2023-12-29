@@ -1,7 +1,7 @@
 from django.db import models
 from .choices import sexos
 from datetime import date
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Usuario(models.Model):
@@ -27,11 +27,22 @@ class Organizacion(models.Model):
         texto = "{0}"
         return texto.format(self.nombre_organizacion)
     
+class Especie(models.Model):
+    nombre = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.nombre
+    
+class Raza(models.Model):
+    nombre = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nombre
+    
 class Mascota(models.Model):
     nombre_mascota=models.CharField(max_length=50)
-    especie=models.CharField(max_length=50)
-    raza=models.CharField(max_length=50)
+    especie = models.ForeignKey(Especie, on_delete=models.CASCADE)
+    raza = models.ForeignKey(Raza, on_delete=models.CASCADE)
     color=models.CharField(max_length=50)
     sexo=models.CharField(max_length=1, choices=sexos, default='H')
     edad=models.IntegerField()
@@ -46,6 +57,7 @@ class Mascota(models.Model):
     
     #Crear Sede para que las organizaciones tengan diferentes sedes y que se muestre en la mascota
 
+    
 class Region(models.Model):
     nombre_region=models.CharField(max_length=50)
     nombre_comuna=models.CharField(max_length=50)
@@ -74,6 +86,7 @@ class Postulacion(models.Model):
     telefono_contacto = models.CharField(max_length=15)
     actividad_economica = models.CharField(max_length=100)
     fecha_nacimiento = models.DateField()
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     mascota=models.ForeignKey(Mascota, on_delete=models.CASCADE)
 
 class SeguimientoAdopcion(models.Model):
