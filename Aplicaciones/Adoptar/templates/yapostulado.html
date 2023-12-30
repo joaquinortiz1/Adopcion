@@ -1,5 +1,12 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 {% block content %}
-    <h2>Ya has postulado para esta mascota</h2>
-    <p>Gracias por tu interés. Si tienes alguna pregunta, contáctanos.</p>
-    <a href="{% url 'lobby' %}">Volver al lobby</a>
+    <div class="container d-flex justify-content-center">
+        <div class="card w-50">
+            <div class="card-body text-center">
+                <h2 class="card-title">Ya has postulado para esta mascota</h2>
+                <p class="card-text">Gracias por tu interés. Si tienes alguna pregunta, contáctanos.</p>
+                <a href="{% url 'lobby' %}" class="btn btn-primary">Volver al lobby</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

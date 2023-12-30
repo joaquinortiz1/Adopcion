@@ -3,11 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <title>Postulación exitosa</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-  <h1>Postulación exitosa</h1>
-  <p>Su postulación ha sido enviada correctamente.</p>
-  <a href="{% url 'lobby' %}">Volver al lobby</a>
+  <div class="container d-flex justify-content-center">
+    <div class="card w-50">
+        <div class="card-body text-center">
+            <h1 class="card-title">Postulación exitosa</h1>
+            <p class="card-text">Su postulación ha sido enviada correctamente.</p>
+            <a href="{% url 'lobby' %}" class="btn btn-primary">Volver al lobby</a>
+        </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
-
