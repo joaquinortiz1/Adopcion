@@ -9,8 +9,12 @@
     <style>
         .card-img-top {
             width: 100%;
-            height: 15vw;
-            object-fit: contain;
+            height: 30vw;  /* Aumenta este valor para hacer la imagen más alta */
+            object-fit: cover;
+        }
+        .card-img-overlay {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
         }
     </style>
 </head>
@@ -32,25 +36,24 @@
         <div class="row">
             {% for mascota in mascotas %}
             <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 mb-4">
-                <div class="card h-100">
+                <div class="card bg-dark text-white">
                     {% if mascota.foto_mascota %}
                         <img src="{{ mascota.foto_mascota.url }}" class="card-img-top img-fluid" alt="{{ mascota.nombre_mascota }}">
                     {% else %}
                         <!-- Puedes agregar una imagen de marcador de posición si no hay foto -->
                         <img src="https://via.placeholder.com/300" class="card-img-top img-fluid" alt="Marcador de posición">
                     {% endif %}
-                    <div class="card-body">
+                    <div class="card-img-overlay">
                         <h5 class="card-title">{{ mascota.nombre_mascota }}</h5>
-                        <p class="card-text"><strong>Especie:</strong> {{ mascota.especie }}</p>
-                        <p class="card-text"><strong>Raza:</strong> {{ mascota.raza }}</p>
-                        <p class="card-text"><strong>Color:</strong> {{ mascota.color }}</p>
-                        <p class="card-text"><strong>Sexo:</strong> {{ mascota.get_sexo_display }}</p>
-                        <p class="card-text"><strong>Edad Aproximada:</strong> {{ mascota.edad }} años</p>
-                        <p class="card-text"><strong>Descripción:</strong> {{ mascota.descripcion }}</p>
-                        <p class="card-text"><strong>Fecha de Rescate:</strong> {{ mascota.fecha_rescate }}</p>
-                        <p class="card-text"><strong>Organizacion:</strong> {{ mascota.organizacion }}</p>
+                        <p class="card-text"> {{ mascota.especie }}</p>
+                        <p class="card-text"> {{ mascota.raza }}</p>
+                        <p class="card-text"> Color {{ mascota.color }}</p>
+                        <p class="card-text"> {{ mascota.get_sexo_display }}</p>
+                        <p class="card-text"> {{ mascota.edad }} años aprox.</p>
+                        <p class="card-text"> {{ mascota.organizacion }}</p>
 
-                        <div class="d-flex justify-content-between align-items-center mt-3">
+
+                        <div class="d-flex justify-content-between align-items-center mt-5">
                             {% if mascota.id %}
                                 <a href="{% url 'postulacion_adopcion' mascota.id %}" class="btn btn-success">Adoptar</a>
                                 <a href="{% url 'seguimiento_mascota' mascota.id %}" class="btn btn-info">Seguimiento</a>
