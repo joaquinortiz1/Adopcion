@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Mascota, CitaAdopcion, FotoMascota, Organizacion, Postulacion, Raza, Especie, SeguimientoAdopcion
 from django.views import View
 from django.contrib.auth.hashers import make_password
-from .forms import FiltroMascotasForm, CitaForm, RegistroForm, AuthenticationForm, OrganizacionRegistroForm, OrganizacionLoginForm, PostulacionForm, SeguimientoAdopcionForm, MascotaForm
+from .forms import FiltroMascotasForm, CitaForm, RegistroForm, AuthenticationForm, OrganizacionRegistroForm, OrganizacionLoginForm, PostulacionForm, SeguimientoAdopcionForm, MascotaForm, ColectaForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -329,3 +329,17 @@ def eliminar_mascota(request, mascota_id):
         return redirect('listar_mascotas')
 
     return render(request, 'eliminar_mascota.html', {'mascota': mascota})
+
+@login_required
+def crear_colecta(request):
+    if request.method == 'POST':
+        form = ColectaForm(request.POST)
+        if form.is_valid():
+            colecta = form.save(commit=False)
+            colecta.organizacion = request.user.organizacion
+            colecta.save()
+            return redirect('index')
+    else:
+        form = ColectaForm()
+
+    return render(request, 'crear_colecta.html', {'form': form})

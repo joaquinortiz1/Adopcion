@@ -110,3 +110,9 @@ class EstadoSalud(models.Model):
     #imagen_mascota=models.FieldFile()
     adoptante=models.ForeignKey(Usuario, on_delete=models.CASCADE)
     mascota=models.ForeignKey(Mascota, on_delete=models.CASCADE)
+
+class Colecta(models.Model):
+    organizacion = models.ForeignKey(Organizacion, on_delete=models.CASCADE)
+    meta = models.DecimalField(max_digits=8, decimal_places=2)
+    fecha_limite = models.DateField()
+    descripcion = models.TextField()
