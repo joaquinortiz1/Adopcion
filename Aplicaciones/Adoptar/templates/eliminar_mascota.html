@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adoptame - Eliminacion de mascotas</title>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Eliminar Mascota</h1>
+        <p>¿Estás seguro de que deseas eliminar la mascota "{{ mascota.nombre_mascota }}"?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Eliminar</button>
+        </form>
+    </div>
+
+</body>
+</html>

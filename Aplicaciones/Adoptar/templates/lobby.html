@@ -1,58 +1,72 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type='text/css' href='{% static "css/lobby.css" %}' rel='stylesheet'/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>Adoptame - Página de Inicio</title>
+    <style>
+        .card-img-top {
+            width: 100%;
+            height: 15vw;
+            object-fit: contain;
+        }
+    </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Bienvenido a Adoptame</h1>
+        <h1 class="mt-4 mb-4">Bienvenido a Adoptame</h1>
 
         <!-- Barra de búsqueda -->
-
-        
-        <!-- Mueve el formulario dentro de un contenedor con la clase "filter-form" -->
-        <div class="filter-form">
-            <form method="get">
-                {{ form.as_p }}
-                <button type="submit">Filtrar</button>
-            </form>
+        <div class="card mb-4">
+            <div class="card-body">
+                <form method="get" class="form-inline">
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary ml-auto">Filtrar</button>
+                </form>
+            </div>
         </div>
 
-        <div class="mascota-container">
+        <div class="row">
             {% for mascota in mascotas %}
-            <div class="mascota-card">
-                <h2>{{ mascota.nombre_mascota }}</h2>
-                <p><strong>Especie:</strong> {{ mascota.especie }}</p>
-                <p><strong>Raza:</strong> {{ mascota.raza }}</p>
-                <p><strong>Color:</strong> {{ mascota.color }}</p>
-                <p><strong>Sexo:</strong> {{ mascota.get_sexo_display }}</p>
-                <p><strong>Edad Aproximada:</strong> {{ mascota.edad }} años</p>
-                <p><strong>Descripción:</strong> {{ mascota.descripcion }}</p>
-                <p><strong>Fecha de Rescate:</strong> {{ mascota.fecha_rescate}}</p>
-                <p><strong>Organizacion:</strong> {{ mascota.organizacion}}</p>
-                {% if mascota.foto_mascota %}
-                    <img src="{{ mascota.foto_mascota.url }}" alt="{{ mascota.nombre_mascota }}">
-                {% endif %}     
-                {% if mascota.id %}
-                    <button onclick="location.href='{% url 'postulacion_adopcion' mascota.id %}'">Adoptar</button>
-                    <button onclick="location.href='{% url 'seguimiento_mascota' mascota.id %}'">Seguimiento</button>
-                {% else %}
-                    <p>No se puede generar la URL de adopción.</p>
-                {% endif %}
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 mb-4">
+                <div class="card h-100">
+                    {% if mascota.foto_mascota %}
+                        <img src="{{ mascota.foto_mascota.url }}" class="card-img-top img-fluid" alt="{{ mascota.nombre_mascota }}">
+                    {% else %}
+                        <!-- Puedes agregar una imagen de marcador de posición si no hay foto -->
+                        <img src="https://via.placeholder.com/300" class="card-img-top img-fluid" alt="Marcador de posición">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ mascota.nombre_mascota }}</h5>
+                        <p class="card-text"><strong>Especie:</strong> {{ mascota.especie }}</p>
+                        <p class="card-text"><strong>Raza:</strong> {{ mascota.raza }}</p>
+                        <p class="card-text"><strong>Color:</strong> {{ mascota.color }}</p>
+                        <p class="card-text"><strong>Sexo:</strong> {{ mascota.get_sexo_display }}</p>
+                        <p class="card-text"><strong>Edad Aproximada:</strong> {{ mascota.edad }} años</p>
+                        <p class="card-text"><strong>Descripción:</strong> {{ mascota.descripcion }}</p>
+                        <p class="card-text"><strong>Fecha de Rescate:</strong> {{ mascota.fecha_rescate }}</p>
+                        <p class="card-text"><strong>Organizacion:</strong> {{ mascota.organizacion }}</p>
 
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            {% if mascota.id %}
+                                <a href="{% url 'postulacion_adopcion' mascota.id %}" class="btn btn-success">Adoptar</a>
+                                <a href="{% url 'seguimiento_mascota' mascota.id %}" class="btn btn-info">Seguimiento</a>
+                            {% else %}
+                                <p class="text-danger">No se puede generar la URL de adopción.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
             {% endfor %}
-
         </div>
     </div>
 
-    <!--<script type='text/javascript' src='{% static "js/lobby.js" %}'> var mascotaId = {{ mascota.id }};
-    </script>-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

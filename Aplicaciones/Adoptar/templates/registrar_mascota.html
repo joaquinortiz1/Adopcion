@@ -1,82 +1,95 @@
-<div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-        <h2>Registro de Mascotas</h2>
-        <div class="card">
-            <div class="card-body">
-                <form action="{% url 'registro_mascota' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adoptame - Registro de Mascotas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
 
-                    <div class="form-group">
-                        <label for="nombre_mascota">Nombre de la Mascota:</label>
-                        <input type="text" id="nombre_mascota" name="nombre_mascota" class="form-control" placeholder="Nombre" maxlength="50" required>
-                    </div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <h2 class="text-center mb-4">Registro de Mascotas</h2>
+            <div class="card">
+                <div class="card-body">
+                    <form action="{% url 'registro_mascota' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
 
-                    <div class="form-group">
-                        <label for="especie">Especie:</label>
-                        <select name="especie" id="especie">
-                            {% for especie in especies %}
-                                <option value="{{ especie.id }}">{{ especie.nombre }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                        <div class="form-group">
+                            <label for="nombre_mascota">Nombre de la Mascota:</label>
+                            <input type="text" id="nombre_mascota" name="nombre_mascota" class="form-control" placeholder="Nombre" maxlength="50" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="raza">Raza:</label>
-                        <select name="raza" id="raza">
-                            {% for raza in razas %}
-                                <option value="{{ raza.id }}">{{ raza.nombre }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                        <div class="form-group">
+                            <label for="especie">Especie:</label>
+                            <select name="especie" id="especie">
+                                {% for especie in especies %}
+                                    <option value="{{ especie.id }}">{{ especie.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="color">Color:</label>
-                        <input type="text" id="color" name="color" class="form-control" placeholder="Color" maxlength="50" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="raza">Raza:</label>
+                            <select name="raza" id="raza">
+                                {% for raza in razas %}
+                                    <option value="{{ raza.id }}">{{ raza.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="sexo">Sexo:</label>
-                        <select id="sexo" name="sexo" class="form-control" required>
-                            <option value="H">Hembra</option>
-                            <option value="M">Macho</option>
-                        </select>
-                    </div>
+                        <div class="form-group">
+                            <label for="color">Color:</label>
+                            <input type="text" id="color" name="color" class="form-control" placeholder="Color" maxlength="50" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="edad">Edad:</label>
-                        <input type="number" id="edad" name="edad" class="form-control" placeholder="Edad" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="sexo">Sexo:</label>
+                            <select id="sexo" name="sexo" class="form-control" required>
+                                <option value="H">Hembra</option>
+                                <option value="M">Macho</option>
+                            </select>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="fecha_rescate">Fecha de Rescate:</label>
-                        <input type="date" id="fecha_rescate" name="fecha_rescate" class="form-control" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="edad">Edad:</label>
+                            <input type="number" id="edad" name="edad" class="form-control" placeholder="Edad" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="descripcion">Descripción:</label>
-                        <textarea id="descripcion" name="descripcion" class="form-control" placeholder="Descripción" rows="4" maxlength="500" required></textarea>
-                    </div>
+                        <div class="form-group">
+                            <label for="fecha_rescate">Fecha de Rescate:</label>
+                            <input type="date" id="fecha_rescate" name="fecha_rescate" class="form-control" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="imagen">Imagen:</label>
-                        <input type="file" name="fotos_mascota" />
-                    </div>
+                        <div class="form-group">
+                            <label for="descripcion">Descripción:</label>
+                            <textarea id="descripcion" name="descripcion" class="form-control" placeholder="Descripción" rows="4" maxlength="500" required></textarea>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="organizacion">Organización:</label>
-                        <select name="organizacion" id="organizacion">
-                            {% for org in organizaciones %}
-                                <option value="{{ org.id }}">{{ org.nombre_organizacion }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                        <div class="form-group">
+                            <label for="imagen">Imagen:</label>
+                            <input type="file" name="fotos_mascota" />
+                        </div>
 
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success btn-block text-white">Registrar Mascota</button>
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <label for="organizacion">Organización:</label>
+                            <select name="organizacion" id="organizacion">
+                                {% for org in organizaciones %}
+                                    <option value="{{ org.id }}">{{ org.nombre_organizacion }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-block">Registrar Mascota</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-
-    <!-- Aquí puedes agregar la sección para mostrar el listado de mascotas -->
 </div>
+
+</body>
+</html>
+

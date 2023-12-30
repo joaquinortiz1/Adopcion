@@ -1,36 +1,61 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type='text/css' href='{% static "css/agendar_cita.css" %}' rel='stylesheet'/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>Postular para Adoptar a {{ mascota.nombre_mascota }}</title>
+    <style>
+        .card-img-top {
+            width: 100%;
+            height: 30vw; /* Adjust this value to change the height of the image */
+            object-fit: contain;
+        }
+        .card-img-overlay {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1 class="my-4">Postular para Adoptar a {{ mascota.nombre_mascota }}</h1>
 
-    <h1>Postular para Adoptar a {{ mascota.nombre_mascota }}</h1>
+        <div class="card mb-4 bg-dark text-white">
+            {% if mascota.foto_mascota %}
+                <img src="{{ mascota.foto_mascota.url }}" class="card-img-top img-fluid" alt="{{ mascota.nombre_mascota }}">
+            {% else %}
+                <!-- Puedes agregar una imagen de marcador de posición si no hay foto -->
+                <img src="https://via.placeholder.com/300" class="card-img-top img-fluid" alt="Marcador de posición">
+            {% endif %}
+            <div class="card-img-overlay">
+                <h5 class="card-title">Información de la mascota:</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item bg-transparent">Especie: {{ mascota.especie }}</li>
+                    <li class="list-group-item bg-transparent">Raza: {{ mascota.raza }}</li>
+                    <li class="list-group-item bg-transparent">Color: {{ mascota.color }}</li>
+                    <li class="list-group-item bg-transparent">Sexo: {{ mascota.get_sexo_display }}</li>
+                    <li class="list-group-item bg-transparent">Edad: {{ mascota.edad }} años</li>
+                    <li class="list-group-item bg-transparent">Descripción: {{ mascota.descripcion }}</li>
+                </ul>
+            </div>
+        </div>
 
-    <div class="mascota-info">
-        <p>Información de la mascota:</p>
-        <ul>
-            <li>Especie: {{ mascota.especie }}</li>
-            <li>Raza: {{ mascota.raza }}</li>
-            <li>Color: {{ mascota.color }}</li>
-            <li>Sexo: {{ mascota.get_sexo_display }}</li>
-            <li>Edad: {{ mascota.edad }} años</li>
-            <li>Descripción: {{ mascota.descripcion }}</li>
-        </ul>
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Postulación de Adopción</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Enviar Postulación</button>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <div class="cita-registro">
-        <h2>Postulación de Adopción</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Enviar Postulación</button>
-        </form>
-    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

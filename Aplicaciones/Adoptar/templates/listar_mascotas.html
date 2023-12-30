@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adoptame - Listado de mascotas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1>Listado de Mascotas</h1>
+            <a href="{% url 'registro_mascota' %}" class="btn btn-primary">Ingresar nueva mascota</a>
+        </div>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Especie</th>
+                        <th>Raza</th>
+                        <th>Color</th>
+                        <th>Sexo</th>
+                        <th>Edad</th>
+                        <th>Descripción</th>
+                        <th>Fecha de Rescate</th>
+                        <th>Organización</th>
+                        <th>Imagen</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mascota in mascotas %}
+                    <tr>
+                        <td>{{ mascota.nombre_mascota }}</td>
+                        <td>{{ mascota.especie }}</td>
+                        <td>{{ mascota.raza }}</td>
+                        <td>{{ mascota.color }}</td>
+                        <td>{{ mascota.get_sexo_display }}</td>
+                        <td>{{ mascota.edad }} años</td>
+                        <td>{{ mascota.descripcion }}</td>
+                        <td>{{ mascota.fecha_rescate }}</td>
+                        <td>{{ mascota.organizacion }}</td>
+                        <td>
+                            {% if mascota.foto_mascota %}
+                                <img src="{{ mascota.foto_mascota.url }}" alt="{{ mascota.nombre_mascota }}" style="max-width: 100px;">
+                            {% else %}
+                                No hay imagen
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'editar_mascota' mascota.id %}" class="btn btn-info">Editar</a>
+                            <a href="{% url 'eliminar_mascota' mascota.id %}" class="btn btn-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

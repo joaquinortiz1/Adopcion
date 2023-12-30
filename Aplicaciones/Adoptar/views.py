@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Mascota, CitaAdopcion, FotoMascota, Organizacion, Postulacion, Raza, Especie, SeguimientoAdopcion
 from django.views import View
 from django.contrib.auth.hashers import make_password
-from .forms import FiltroMascotasForm, CitaForm, RegistroForm, AuthenticationForm, OrganizacionRegistroForm, OrganizacionLoginForm, PostulacionForm, SeguimientoAdopcionForm
+from .forms import FiltroMascotasForm, CitaForm, RegistroForm, AuthenticationForm, OrganizacionRegistroForm, OrganizacionLoginForm, PostulacionForm, SeguimientoAdopcionForm, MascotaForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -134,7 +134,7 @@ def inicio_sesion_organizacion(request):
             login(request, organizacion)
 
             # Redirigir a donde desees después de iniciar sesión
-            return redirect('lobby_organizacion')  # Ajusta la URL según tu configuración
+            return redirect('listar_mascotas')  # Ajusta la URL según tu configuración
         else:
             # Organización no encontrada o contraseña incorrecta
             messages.error(request, 'Nombre de organización o contraseña incorrectos. Inténtalo de nuevo.')
@@ -228,7 +228,7 @@ def registrar_mascota(request):
         )
 
         # Redirige a donde desees después de crear la mascota
-        return redirect('lobby_organizacion')
+        return redirect('listar_mascotas')
 
     else:
         # Si el método no es POST, renderiza el formulario
@@ -301,3 +301,31 @@ def seguimiento_mascota(request, mascota_id):
         form = SeguimientoAdopcionForm()
 
     return render(request, 'seguimiento_mascota.html', {'mascota': mascota, 'form': form})
+
+
+
+def listar_mascotas(request):
+    mascotas = Mascota.objects.all()
+    return render(request, 'listar_mascotas.html', {'mascotas': mascotas})
+
+def editar_mascota(request, mascota_id):
+    mascota = get_object_or_404(Mascota, pk=mascota_id)
+
+    if request.method == 'POST':
+        form = MascotaForm(request.POST, request.FILES, instance=mascota)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_mascotas')
+    else:
+        form = MascotaForm(instance=mascota)
+
+    return render(request, 'editar_mascota.html', {'form': form, 'mascota': mascota})
+
+def eliminar_mascota(request, mascota_id):
+    mascota = get_object_or_404(Mascota, pk=mascota_id)
+    
+    if request.method == 'POST':
+        mascota.delete()
+        return redirect('listar_mascotas')
+
+    return render(request, 'eliminar_mascota.html', {'mascota': mascota})
