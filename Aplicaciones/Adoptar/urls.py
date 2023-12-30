@@ -20,4 +20,5 @@ urlpatterns = [
     path('listar_mascotas/', views.listar_mascotas, name='listar_mascotas'),
     path('eliminar_mascota/<int:mascota_id>/', views.eliminar_mascota, name='eliminar_mascota'),
     path('editar_mascota/<int:mascota_id>/', views.editar_mascota, name='editar_mascota'),
+    path('crear_colecta/', views.crear_colecta, name='crear_colecta'),
 ]
