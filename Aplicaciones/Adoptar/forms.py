@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Usuario, Organizacion, Mascota, Raza, Especie, SeguimientoAdopcion, Colecta
+from .models import Usuario, Organizacion, Mascota, Raza, Especie, SeguimientoAdopcion, Colecta, SeguimientoEstadoSalud
 from django.core.exceptions import ValidationError
 from datetime import datetime
 
@@ -69,3 +69,12 @@ class ColectaForm(forms.ModelForm):
     class Meta:
         model = Colecta
         fields = ['meta', 'fecha_limite', 'descripcion']
+        
+
+class SeguimientoEstadoSaludForm(forms.ModelForm):
+    class Meta:
+        model = SeguimientoEstadoSalud
+        fields = ['foto_mascota_mia', 'vacuna_mascota', 'fecha_vacuna', 'descripcion_estado_salud']
+        widgets = {
+            'fecha_vacuna': forms.DateInput(attrs={'type': 'date'}),
+        }

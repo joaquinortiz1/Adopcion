@@ -97,22 +97,26 @@ class SeguimientoAdopcion(models.Model):
     mascota=models.ForeignKey(Mascota, on_delete=models.CASCADE)
 
 class RegistroVacuna(models.Model):
-    fecha=models.DateField()
     vacuna=models.CharField(max_length=50)
-    nombre_veterinario=models.CharField(max_length=50)
-    fecha_proximo_control=models.DateField()
-    adoptante=models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    mascota=models.ForeignKey(Mascota, on_delete=models.CASCADE)
+
+    def __str__(self):
+        texto = "{0}"
+        return texto.format(self.vacuna)
 
 class EstadoSalud(models.Model):
-    estado_salud=models.CharField(max_length=50)
-    descripcion=models.TextField()
-    #imagen_mascota=models.FieldFile()
-    adoptante=models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    mascota=models.ForeignKey(Mascota, on_delete=models.CASCADE)
+    descripcion = models.CharField(max_length=255, default='valor_predeterminado')
+
 
 class Colecta(models.Model):
     organizacion = models.ForeignKey(Organizacion, on_delete=models.CASCADE)
     meta = models.DecimalField(max_digits=8, decimal_places=2)
     fecha_limite = models.DateField()
     descripcion = models.TextField()
+
+class SeguimientoEstadoSalud(models.Model):
+    foto_mascota_mia = models.ImageField(upload_to='fotos_mascota_mia', null=True, blank=True)
+    vacuna_mascota = models.ForeignKey(RegistroVacuna, on_delete=models.CASCADE)
+    fecha_vacuna = models.DateField()
+    descripcion_estado_salud = models.TextField()
+    adoptante = models.ForeignKey(User, on_delete=models.CASCADE)
+    mascota = models.ForeignKey(Mascota, on_delete=models.CASCADE)
