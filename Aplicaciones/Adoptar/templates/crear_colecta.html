@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 {% block content %}
   <div class="container">
     <h1 class="my-4">Crear Colecta</h1>
@@ -5,10 +6,21 @@
       <div class="card-body">
         <form method="post">
           {% csrf_token %}
+          {{ form.non_field_errors }}
           {{ form.as_p }}
+          <div class="form-group">
+            <label for="{{ form.meta.id_for_label }}">Meta: $<span id="metaValue">{{ form.meta.value }}</span></label>
+            {{ form.meta.errors }}
+            <input type="range" name="{{ form.meta.name }}" id="{{ form.meta.id_for_label }}" class="form-control-range" min="0" max="50000000" step="100" value="{{ form.meta.value }}" oninput="updateMetaValue(this.value)">
+          </div>
           <button type="submit" class="btn btn-primary">Crear Colecta</button>
         </form>
       </div>
     </div>
   </div>
+  <script>
+    function updateMetaValue(value) {
+      document.getElementById('metaValue').textContent = value;
+    }
+  </script>
 {% endblock %}
