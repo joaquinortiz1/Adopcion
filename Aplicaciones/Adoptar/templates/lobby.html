@@ -13,6 +13,9 @@
     <div class="container">
         <h1>Bienvenido a Adoptame</h1>
 
+        <!-- Barra de búsqueda -->
+
+        
         <!-- Mueve el formulario dentro de un contenedor con la clase "filter-form" -->
         <div class="filter-form">
             <form method="get">
@@ -38,6 +41,7 @@
                 {% endif %}     
                 {% if mascota.id %}
                     <button onclick="location.href='{% url 'postulacion_adopcion' mascota.id %}'">Adoptar</button>
+                    <button onclick="location.href='{% url 'seguimiento_mascota' mascota.id %}'">Seguimiento</button>
                 {% else %}
                     <p>No se puede generar la URL de adopción.</p>
                 {% endif %}
@@ -45,10 +49,6 @@
             </div>
             {% endfor %}
 
-            <!--<div id="galeria" class="galeria-container">-->
-                <!--<span class="cerrar-galeria" onclick="cerrarGaleria()">&times;</span>-->
-                <!--<img id="imagen-galeria" class="galeria-imagen" alt="Galería">-->
-            <!--</div>-->
         </div>
     </div>
 

@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Mascota, CitaAdopcion, FotoMascota, Organizacion, Postulacion, Raza, Especie
+from .models import Mascota, CitaAdopcion, FotoMascota, Organizacion, Postulacion, Raza, Especie, SeguimientoAdopcion
 from django.views import View
 from django.contrib.auth.hashers import make_password
-from .forms import FiltroMascotasForm, CitaForm, RegistroForm, AuthenticationForm, OrganizacionRegistroForm, OrganizacionLoginForm, PostulacionForm
+from .forms import FiltroMascotasForm, CitaForm, RegistroForm, AuthenticationForm, OrganizacionRegistroForm, OrganizacionLoginForm, PostulacionForm, SeguimientoAdopcionForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -278,3 +278,26 @@ def postulacion_adopcion(request, mascota_id):
 
 def postulacion_exitosa(request):
     return render(request, 'postulacion_exitosa.html')
+
+#@login_required
+def seguimiento_mascota(request, mascota_id):
+    mascota = get_object_or_404(Mascota, pk=mascota_id)
+    usuario = request.user
+
+    # Verifica si el usuario ha postulado para esta mascota
+    if not Postulacion.objects.filter(usuario=usuario, mascota=mascota).exists():
+        # El usuario no ha postulado, puedes mostrar un mensaje o redirigir a una página informativa
+        return render(request, 'no_adopto.html')
+
+    # Continúa con la lógica del seguimiento
+    if request.method == 'POST':
+        form = SeguimientoAdopcionForm(request.POST)
+        if form.is_valid():
+            # Lógica de procesamiento del formulario de seguimiento
+            # ...
+
+            return redirect('seguimiento_exitoso')  # Ajusta la URL según tus necesidades
+    else:
+        form = SeguimientoAdopcionForm()
+
+    return render(request, 'seguimiento_mascota.html', {'mascota': mascota, 'form': form})

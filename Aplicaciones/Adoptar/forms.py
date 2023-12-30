@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Usuario, Organizacion, Mascota, Raza, Especie
+from .models import Usuario, Organizacion, Mascota, Raza, Especie, SeguimientoAdopcion
 from django.core.exceptions import ValidationError
 from datetime import datetime
 
@@ -56,3 +56,11 @@ class PostulacionForm(forms.Form):
                 raise ValidationError('Debes ser mayor de 18 años para postularte.')
 
         return cleaned_data
+    
+class SeguimientoAdopcionForm(forms.ModelForm):
+    class Meta:
+        model = SeguimientoAdopcion
+        fields = ['fecha', 'estado_seguimiento']
+        widgets = {
+            'fecha': forms.DateInput(attrs={'type': 'date'}),
+        }

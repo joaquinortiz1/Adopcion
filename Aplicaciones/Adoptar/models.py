@@ -93,7 +93,7 @@ class Postulacion(models.Model):
 class SeguimientoAdopcion(models.Model):
     fecha=models.DateField()
     estado_seguimiento=models.CharField(max_length=50)
-    adoptante=models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    adoptante=models.ForeignKey(User, on_delete=models.CASCADE)
     mascota=models.ForeignKey(Mascota, on_delete=models.CASCADE)
 
 class RegistroVacuna(models.Model):

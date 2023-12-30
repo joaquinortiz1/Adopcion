@@ -16,4 +16,5 @@ urlpatterns = [
     #path('registro_mascota/vista_org/', views.vista_organizacion, name='vista_org'),
     path('postulacion_adopcion/<int:mascota_id>/', views.postulacion_adopcion, name='postulacion_adopcion'),
     path('postulacion_adopcion/postulacion_exitosa', views.postulacion_exitosa, name='postulacion_exitosa'),
+    path('seguimiento_mascota/<int:mascota_id>/', views.seguimiento_mascota, name='seguimiento_mascota'),
 ]

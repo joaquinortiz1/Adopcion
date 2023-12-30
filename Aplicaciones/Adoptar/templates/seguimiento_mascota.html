@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Seguimiento de Adopción</title>
+</head>
+<body>
+
+    <h1>Seguimiento de Adopción para {{ mascota.nombre_mascota }}</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar Seguimiento</button>
+    </form>
+
+    <a href="{% url 'lobby' %}">Volver al lobby</a>
+
+</body>
+</html>
