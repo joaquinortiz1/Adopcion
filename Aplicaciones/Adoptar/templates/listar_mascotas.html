@@ -16,6 +16,10 @@
             <div>
                 <a href="{% url 'registro_mascota' %}" class="btn btn-primary mr-2">Ingresar nueva mascota</a>
                 <a href="{% url 'crear_colecta' %}" class="btn btn-success">Crear colecta</a>
+                {% for colecta in colectas %}
+                <a href="{% url 'editar_colecta' colecta.id %}" class="btn btn-info">Editar Colecta</a>
+                <a href="{% url 'eliminar_colecta' colecta.id %}" class="btn btn-danger">Eliminar Colecta</a>
+                {% endfor %}
             </div>
         </div>
         <div class="table-responsive py-2">

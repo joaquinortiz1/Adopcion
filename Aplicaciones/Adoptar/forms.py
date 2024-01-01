@@ -68,8 +68,10 @@ class SeguimientoAdopcionForm(forms.ModelForm):
 class ColectaForm(forms.ModelForm):
     class Meta:
         model = Colecta
-        fields = ['meta', 'fecha_limite', 'descripcion']
-        
+        fields = ['meta', 'fecha_limite', 'descripcion','organizacion']
+        widgets = {
+            'fecha_limite': forms.DateInput(attrs={'type': 'date'}),
+        }
 
 class SeguimientoEstadoSaludForm(forms.ModelForm):
     class Meta:

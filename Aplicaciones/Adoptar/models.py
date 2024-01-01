@@ -116,7 +116,7 @@ class EstadoSalud(models.Model):
 
 class Colecta(models.Model):
     organizacion = models.ForeignKey(Organizacion, on_delete=models.CASCADE)
-    meta = models.DecimalField(max_digits=8, decimal_places=2)
+    meta = models.DecimalField(max_digits=12, decimal_places=2)
     fecha_limite = models.DateField()
     descripcion = models.TextField()
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Mascota, CitaAdopcion, FotoMascota, Organizacion, Postulacion, Raza, Especie, SeguimientoAdopcion, Sede
+from .models import Mascota, CitaAdopcion, FotoMascota, Organizacion, Postulacion, Raza, Especie, SeguimientoAdopcion, Sede, Colecta
 from django.views import View
 from django.contrib.auth.hashers import make_password
 from .forms import FiltroMascotasForm, CitaForm, RegistroForm, AuthenticationForm, OrganizacionRegistroForm, OrganizacionLoginForm, PostulacionForm, SeguimientoAdopcionForm, MascotaForm, ColectaForm, SeguimientoEstadoSaludForm
@@ -10,7 +10,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 def index(request):
-    return render(request, 'index.html')
+    colectas = Colecta.objects.all()
+    return render(request, 'index.html', {'colectas': colectas})
 
 
 def lobby(request):
@@ -319,7 +320,8 @@ def seguimiento_mascota(request, mascota_id):
 
 def listar_mascotas(request):
     mascotas = Mascota.objects.all()
-    return render(request, 'listar_mascotas.html', {'mascotas': mascotas})
+    colectas = Colecta.objects.all()  # Asegúrate de que tienes un modelo Colecta
+    return render(request, 'listar_mascotas.html', {'mascotas': mascotas, 'colectas': colectas})
 
 def editar_mascota(request, mascota_id):
     mascota = get_object_or_404(Mascota, pk=mascota_id)
@@ -343,16 +345,43 @@ def eliminar_mascota(request, mascota_id):
 
     return render(request, 'eliminar_mascota.html', {'mascota': mascota})
 
-@login_required
+
 def crear_colecta(request):
     if request.method == 'POST':
         form = ColectaForm(request.POST)
         if form.is_valid():
-            colecta = form.save(commit=False)
-            colecta.organizacion = request.user.organizacion
-            colecta.save()
+            form.save()
             return redirect('index')
     else:
         form = ColectaForm()
 
     return render(request, 'crear_colecta.html', {'form': form})
+
+def donar(request, colecta_id):
+    colecta = get_object_or_404(Colecta, id=colecta_id)
+
+    # Lógica para procesar la donación, si es necesario
+
+    return render(request, 'donar.html', {'colecta': colecta})
+
+def editar_colecta(request, colecta_id):
+    colecta = get_object_or_404(Colecta, pk=colecta_id)
+
+    if request.method == 'POST':
+        form = ColectaForm(request.POST, instance=colecta)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_mascotas')
+    else:
+        form = ColectaForm(instance=colecta)
+
+    return render(request, 'editar_colecta.html', {'form': form, 'colecta': colecta})
+
+def eliminar_colecta(request, colecta_id):
+    colecta = get_object_or_404(Colecta, pk=colecta_id)
+    
+    if request.method == 'POST':
+        colecta.delete()
+        return redirect('listar_mascotas')
+
+    return render(request, 'eliminar_colecta.html', {'colecta': colecta})

@@ -21,4 +21,7 @@ urlpatterns = [
     path('eliminar_mascota/<int:mascota_id>/', views.eliminar_mascota, name='eliminar_mascota'),
     path('editar_mascota/<int:mascota_id>/', views.editar_mascota, name='editar_mascota'),
     path('crear_colecta/', views.crear_colecta, name='crear_colecta'),
+    path('donar/<int:colecta_id>/', views.donar, name='donar'),
+    path('editar_colecta/<int:colecta_id>/', views.editar_colecta, name='editar_colecta'),
+    path('eliminar_colecta/<int:colecta_id>/', views.eliminar_colecta, name='eliminar_colecta'),
 ]

@@ -43,14 +43,14 @@
     
     <script type='text/javascript' src='{% static "js/index.js" %}'></script>
 
-    {% if colecta %}
+    {% for colecta in colectas %}
     <div class="alert alert-primary" role="alert">
-        <h4 class="alert-heading">{{ colecta.organizacion.nombre }}</h4>
+        <h4 class="alert-heading">{{ colecta.organizacion }}</h4>
         <p>{{ colecta.descripcion }}</p>
         <hr>
         <p class="mb-0">Meta: {{ colecta.meta }} - Fecha límite: {{ colecta.fecha_limite }}</p>
         <a href="{% url 'donar' colecta.id %}" class="btn btn-primary">Donar</a>
     </div>
-    {% endif %}
+    {% endfor %}
 </body>
 </html>
