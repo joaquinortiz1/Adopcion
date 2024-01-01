@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Mascota, CitaAdopcion, FotoMascota, Organizacion, Postulacion, Raza, Especie, SeguimientoAdopcion
+from .models import Mascota, CitaAdopcion, FotoMascota, Organizacion, Postulacion, Raza, Especie, SeguimientoAdopcion, Sede
 from django.views import View
 from django.contrib.auth.hashers import make_password
 from .forms import FiltroMascotasForm, CitaForm, RegistroForm, AuthenticationForm, OrganizacionRegistroForm, OrganizacionLoginForm, PostulacionForm, SeguimientoAdopcionForm, MascotaForm, ColectaForm, SeguimientoEstadoSaludForm
@@ -138,7 +138,7 @@ def inicio_sesion_organizacion(request):
         else:
             # Organización no encontrada o contraseña incorrecta
             messages.error(request, 'Nombre de organización o contraseña incorrectos. Inténtalo de nuevo.')
-            return redirect('lobby_organizacion')
+            return redirect('listar_mascotas')
         
     return render(request, 'inicio_sesion_org.html')
 
@@ -208,6 +208,18 @@ def registrar_mascota(request):
         organizacion_id = request.POST['organizacion']
         foto_mascota = request.FILES.get('fotos_mascota')
 
+        # Obtén los datos de la sede del formulario
+        nombre_sede = request.POST['nombre_sede']
+        direccion_sede = request.POST['direccion_sede']
+        region_sede = request.POST['region_sede']
+
+        # Crea una nueva instancia de Sede
+        sede = Sede.objects.create(
+            nombre_sede=nombre_sede,
+            direccion_sede=direccion_sede,
+            region_sede=region_sede
+        )
+
         # Obtén las instancias de Especie y Raza
         especie = Especie.objects.get(pk=especie_id)
         raza = Raza.objects.get(pk=raza_id)
@@ -224,7 +236,8 @@ def registrar_mascota(request):
             fecha_rescate=fecha_rescate,
             descripcion=descripcion,
             organizacion=organizacion,
-            foto_mascota=foto_mascota
+            foto_mascota=foto_mascota,
+            sede=sede  # Asegúrate de que tu modelo Mascota tenga un campo 'sede' que sea una ForeignKey a Sede
         )
 
         # Redirige a donde desees después de crear la mascota

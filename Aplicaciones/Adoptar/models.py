@@ -23,10 +23,16 @@ class Organizacion(models.Model):
     direccion=models.CharField(max_length=50)
     sitio_web=models.URLField()
 
+
     def __str__(self):
         texto = "{0}"
         return texto.format(self.nombre_organizacion)
     
+class Sede(models.Model):
+   nombre_sede = models.CharField(max_length=50, default=None)
+   direccion_sede = models.CharField(max_length=50, default=None)
+   region_sede = models.CharField(max_length=50, default=None)
+
 class Especie(models.Model):
     nombre = models.CharField(max_length=50)
 
@@ -57,6 +63,7 @@ class Mascota(models.Model):
     descripcion=models.TextField()
     organizacion = models.ForeignKey(Organizacion, on_delete=models.CASCADE, related_name='mascotas', default=None, null=True, blank=True)
     foto_mascota = models.ImageField(upload_to='imagenes', null=True, blank=True)
+    sede = models.ForeignKey(Sede, on_delete=models.CASCADE, default=None, null=True, blank=True)
     #foto_mascota = models.ForeignKey(FotoMascota, on_delete=models.CASCADE, null=True, blank=True, default=None)
     #adoptante=models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
