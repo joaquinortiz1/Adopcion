@@ -47,13 +47,14 @@
                         <h5 class="card-title">{{ mascota.nombre_mascota }}</h5>
                         <p class="card-text"> {{ mascota.especie }}</p>
                         <p class="card-text"> {{ mascota.raza }}</p>
-                        <p class="card-text"> Color {{ mascota.color }}</p>
                         <p class="card-text"> {{ mascota.get_sexo_display }}</p>
                         <p class="card-text"> {{ mascota.edad }} años aprox.</p>
                         <p class="card-text"> {{ mascota.organizacion }}</p>
+                        <p class="card-text"> {{ mascota.sede.nombre_sede }}</p>
+                        <p class="card-text"> {{ mascota.sede.region_sede }}</p>
 
 
-                        <div class="d-flex justify-content-between align-items-center mt-5">
+                        <div class="d-flex justify-content-between align-items-center mt-4">
                             {% if mascota.id %}
                                 <a href="{% url 'postulacion_adopcion' mascota.id %}" class="btn btn-success">Adoptar</a>
                                 <a href="{% url 'seguimiento_mascota' mascota.id %}" class="btn btn-info">Seguimiento</a>
