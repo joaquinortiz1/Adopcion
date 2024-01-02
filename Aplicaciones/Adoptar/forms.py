@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Usuario, Organizacion, Mascota, Raza, Especie, SeguimientoAdopcion, Colecta, SeguimientoEstadoSalud
 from django.core.exceptions import ValidationError
 from datetime import datetime
+from django.contrib.auth.models import User
 
 class FiltroMascotasForm(forms.Form):
     especie = forms.ModelChoiceField(queryset=Especie.objects.all(), empty_label="Seleccione", required=False)
@@ -14,9 +15,12 @@ class CitaForm(forms.Form):
     hora = forms.TimeField(label='Hora', widget=forms.TimeInput(attrs={'type': 'time'}))
 
 class RegistroForm(forms.ModelForm):
-    username = forms.CharField(label='Nombre de Usuario', max_length=100)
-    email = forms.EmailField(label='Correo Electrónico')
-    password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password']
+        widgets = {
+            'password': forms.PasswordInput(),
+        }
 
 class AuthenticationForm(forms.Form):
     nombre = forms.CharField(label='Nombre de usuario', max_length=100)

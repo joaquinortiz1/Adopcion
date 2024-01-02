@@ -2,14 +2,27 @@
 <html>
 <head>
     <title>Eliminar Colecta</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>¿Estás seguro de que quieres eliminar esta colecta de?</h1>
-    <p>{{ colecta.organizacion }}</p>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit">Sí, eliminar</button>
-    </form>
-    <a href="{% url 'listar_mascotas' %}">No, volver atrás</a>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card mt-5">
+                    <div class="card-header">
+                        <h1>¿Estás seguro de que quieres eliminar esta colecta de {{ colecta.organizacion }}?</h1>
+                    </div>
+                    <div class="card-body">
+                        <p>{{ colecta.descripcion }}</p>
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+                        </form>
+                        <a href="{% url 'listar_mascotas' %}" class="btn btn-secondary mt-3">No, volver atrás</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

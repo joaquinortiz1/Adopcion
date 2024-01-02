@@ -121,7 +121,7 @@ class Colecta(models.Model):
     descripcion = models.TextField()
 
 class SeguimientoEstadoSalud(models.Model):
-    foto_mascota_mia = models.ImageField(upload_to='fotos_mascota_mia', null=True, blank=True)
+    foto_mascota_mia = models.ImageField(upload_to='imagenes', null=True, blank=True)
     vacuna_mascota = models.ForeignKey(RegistroVacuna, on_delete=models.CASCADE)
     fecha_vacuna = models.DateField()
     descripcion_estado_salud = models.TextField()

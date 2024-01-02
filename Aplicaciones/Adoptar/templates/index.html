@@ -5,52 +5,63 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type='text/css' href='{% static "css/index.css" %}' rel='stylesheet'/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>Adoptame - Página de Inicio</title>
 </head>
 <body>
-    <div class="barra-navegacion">
-        <ul>
-            <li class="opcion" onmouseover="mostrarOpciones('iniciar-sesion')" onmouseout="ocultarOpciones('iniciar-sesion')">
-                <a href="#">Iniciar Sesión</a>
-                <ul class="opciones-adicionales" id="opciones-iniciar-sesion">
-                    <li><a href="{% url 'inicio_sesion' %}">Como Adoptante</a></li>
-                    <li><a href="{% url 'inicio_sesion_organizacion' %}">Como Organización</a></li>
-                </ul>
-            </li>
-            <li class="opcion" onmouseover="mostrarOpciones('registrarse')" onmouseout="ocultarOpciones('registrarse')">
-                <a href="#">Registrarse</a>
-                <ul class="opciones-adicionales" id="opciones-registrarse">
-                    <li><a href="{% url 'registro' %}">Como Adoptante</a></li>
-                    <li><a href="{% url 'registro_organizacion' %}">Como Organización</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-
-    <div class="presentation">
-        <div class="main-text">Adoptame</div>
-        <div class="sub-text">
-            <div>Descubre</div>
-            <div>un nuevo</div>
-            <div>compañero</div>
-            <div>con el que compartirás</div>
-            <div>un vínculo irrompible.</div>
-            <div>¡Súmate a nuestra comunidad</div>
-            <div>de amantes de animales hoy mismo!</div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Adoptame</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Iniciar Sesión
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'inicio_sesion' %}">Como Adoptante</a>
+                        <a class="dropdown-item" href="{% url 'inicio_sesion_organizacion' %}">Como Organización</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Registrarse
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'registro' %}">Como Adoptante</a>
+                        <a class="dropdown-item" href="{% url 'registro_organizacion' %}">Como Organización</a>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </div>
-    
-    <script type='text/javascript' src='{% static "js/index.js" %}'></script>
+    </nav>
 
-    {% for colecta in colectas %}
-    <div class="alert alert-primary" role="alert">
-        <h4 class="alert-heading">{{ colecta.organizacion }}</h4>
-        <p>{{ colecta.descripcion }}</p>
-        <hr>
-        <p class="mb-0">Meta: {{ colecta.meta }} - Fecha límite: {{ colecta.fecha_limite }}</p>
-        <a href="{% url 'donar' colecta.id %}" class="btn btn-primary">Donar</a>
+    <div class="container mt-5">
+        <div class="jumbotron">
+            <h1 class="display-4">Adoptame</h1>
+            <p class="lead">Descubre un nuevo compañero con el que compartirás un vínculo irrompible. ¡Súmate a nuestra comunidad de amantes de animales hoy mismo!</p>
+        </div>
+
+        {% for colecta in colectas %}
+        <div class="card mb-3 text-white bg-info">
+            <div class="card-header">
+                {{ colecta.organizacion }}
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ colecta.descripcion }}</p>
+                <hr>
+                <p class="mb-0">Meta: {{ colecta.meta }} - Fecha límite: {{ colecta.fecha_limite }}</p>
+                <a href="{% url 'donar' colecta.id %}" class="btn btn-light mt-2">Donar</a>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type='text/javascript' src='{% static "js/index.js" %}'></script>
 </body>
 </html>
