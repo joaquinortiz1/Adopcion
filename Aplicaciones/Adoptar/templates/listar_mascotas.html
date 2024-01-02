@@ -20,6 +20,7 @@
                 <a href="{% url 'editar_colecta' colecta.id %}" class="btn btn-info">Editar Colecta</a>
                 <a href="{% url 'eliminar_colecta' colecta.id %}" class="btn btn-danger">Eliminar Colecta</a>
                 {% endfor %}
+                <a href="{% url 'listar_seguimientos' %}" class="btn btn-secondary">Ver seguimientos</a>
             </div>
         </div>
         <div class="table-responsive py-2">
@@ -71,3 +72,4 @@
 
 </body>
 </html>
+

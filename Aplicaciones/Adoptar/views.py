@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Mascota, CitaAdopcion, FotoMascota, Organizacion, Postulacion, Raza, Especie, SeguimientoAdopcion, Sede, Colecta
+from .models import Mascota, CitaAdopcion, FotoMascota, Organizacion, Postulacion, Raza, Especie, SeguimientoAdopcion, Sede, Colecta, SeguimientoEstadoSalud
 from django.views import View
 from django.contrib.auth.hashers import make_password
 from .forms import FiltroMascotasForm, CitaForm, RegistroForm, AuthenticationForm, OrganizacionRegistroForm, OrganizacionLoginForm, PostulacionForm, SeguimientoAdopcionForm, MascotaForm, ColectaForm, SeguimientoEstadoSaludForm
@@ -307,9 +307,10 @@ def seguimiento_mascota(request, mascota_id):
     if request.method == 'POST':
         form = SeguimientoEstadoSaludForm(request.POST)
         if form.is_valid():
-            # Lógica de procesamiento del formulario de seguimiento
-            # ...
-
+            seguimiento = form.save(commit=False)
+            seguimiento.mascota = mascota
+            seguimiento.adoptante = request.user  # Asegúrate de que estás utilizando el sistema de autenticación de Django
+            seguimiento.save()
             return redirect('seguimiento_exitoso')  # Ajusta la URL según tus necesidades
     else:
         form = SeguimientoEstadoSaludForm()
@@ -385,3 +386,10 @@ def eliminar_colecta(request, colecta_id):
         return redirect('listar_mascotas')
 
     return render(request, 'eliminar_colecta.html', {'colecta': colecta})
+
+def listar_seguimientos(request):
+    seguimientos = SeguimientoEstadoSalud.objects.all()
+    return render(request, 'listar_seguimientos.html', {'seguimientos': seguimientos})
+
+def seguimiento_exitoso(request):
+    return render(request, 'seguimiento_exitoso.html')

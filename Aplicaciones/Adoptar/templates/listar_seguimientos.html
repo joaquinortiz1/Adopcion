@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adoptame - Seguimientos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1>Adoptame - Seguimientos</h1>
+        </div>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Foto</th>
+                        <th>Vacuna</th>
+                        <th>Fecha de Vacuna</th>
+                        <th>Descripción</th>
+                        <th>Mascota</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for seguimiento in seguimientos %}
+                    <tr>
+                        <td>
+                            {% if seguimiento.foto_mascota_mia %}
+                                <img src="{{ seguimiento.foto_mascota_mia.url }}" alt="Foto de seguimiento" style="max-width: 100px;">
+                            {% else %}
+                                No hay imagen
+                            {% endif %}
+                        </td>
+                        <td>{{ seguimiento.vacuna_mascota }}</td>
+                        <td>{{ seguimiento.fecha_vacuna }}</td>
+                        <td>{{ seguimiento.descripcion_estado_salud }}</td>
+                        <td>{{ seguimiento.mascota }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
