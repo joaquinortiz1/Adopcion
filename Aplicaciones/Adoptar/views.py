@@ -10,8 +10,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 def index(request):
-    colectas = Colecta.objects.all()
-    return render(request, 'index.html', {'colectas': colectas})
+   colectas = Colecta.objects.all()
+   colectas_con_porcentaje = []
+   for colecta in colectas:
+       porcentaje_recaudado = (colecta.recaudado / colecta.meta) * 100
+       colectas_con_porcentaje.append((colecta, porcentaje_recaudado))
+   return render(request, 'index.html', {'colectas': colectas_con_porcentaje})
 
 
 def lobby(request):

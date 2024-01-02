@@ -44,7 +44,7 @@
             <p class="lead">Descubre un nuevo compañero con el que compartirás un vínculo irrompible. ¡Súmate a nuestra comunidad de amantes de animales hoy mismo!</p>
         </div>
 
-        {% for colecta in colectas %}
+        {% for colecta, porcentaje_recaudado in colectas %}
         <div class="card mb-3 text-white bg-info">
             <div class="card-header">
                 {{ colecta.organizacion }}
@@ -53,6 +53,9 @@
                 <p class="card-text">{{ colecta.descripcion }}</p>
                 <hr>
                 <p class="mb-0">Meta: {{ colecta.meta }} - Fecha límite: {{ colecta.fecha_limite }}</p>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: {{ porcentaje_recaudado }}%;" aria-valuenow="{{ porcentaje_recaudado }}" aria-valuemin="0" aria-valuemax="100">{{ porcentaje_recaudado }}%</div>
+                </div>
                 <a href="{% url 'donar' colecta.id %}" class="btn btn-light mt-2">Donar</a>
             </div>
         </div>
