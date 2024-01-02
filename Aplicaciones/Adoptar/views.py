@@ -330,7 +330,19 @@ def editar_mascota(request, mascota_id):
     if request.method == 'POST':
         form = MascotaForm(request.POST, request.FILES, instance=mascota)
         if form.is_valid():
-            form.save()
+            mascota = form.save(commit=False)
+            if mascota.sede is None:
+                mascota.sede = Sede.objects.create(
+                    nombre_sede=request.POST.get('nombre_sede'),
+                    direccion_sede=request.POST.get('direccion_sede'),
+                    region_sede=request.POST.get('region_sede')
+                )
+            else:
+                mascota.sede.nombre_sede = request.POST.get('nombre_sede')
+                mascota.sede.direccion_sede = request.POST.get('direccion_sede')
+                mascota.sede.region_sede = request.POST.get('region_sede')
+                mascota.sede.save()
+            mascota.save()
             return redirect('listar_mascotas')
     else:
         form = MascotaForm(instance=mascota)
